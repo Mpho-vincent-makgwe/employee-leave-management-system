@@ -16,6 +16,7 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --color-primary: #4f46e5; /*Main purple*/
   }
 }
 
@@ -23,4 +24,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Background utilities */
+.bg-main-purple {
+  background-color: #4f46e5;
+}
+.text-main-purple {
+  color: #4f46e5;
 }
