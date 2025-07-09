@@ -1,23 +1,29 @@
-// components/Navbar.js
+import { FaBell, FaSearch } from 'react-icons/fa';
+
 export default function Navbar() {
   return (
-    <header className="bg-white shadow-sm">
-      <div className="flex items-center justify-between px-6 py-4">
-        <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-semibold text-gray-800">Dashboard Overview</h1>
-        </div>
-        <div className="flex items-center space-x-4">
-          <div className="relative">
-            <button className="text-gray-500 hover:text-gray-700">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-            </button>
-            <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+    <header className="bg-white shadow-sm h-16 fixed top-0 right-0 left-64 z-10 border-b border-gray-200">
+      <div className="flex items-center justify-end h-full px-6 gap-6">
+        <div className="relative flex-1 max-w-2xl">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <FaSearch className="text-gray-400" />
           </div>
-          <div className="flex items-center">
-            <div className="ml-3">
-              <p className="text-sm font-medium text-gray-700">Paul</p>
+          <input
+            type="text"
+            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Search..."
+          />
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <button className="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
+              <FaBell className="text-lg text-gray-500" />
+              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-medium">
+              P
             </div>
           </div>
         </div>
