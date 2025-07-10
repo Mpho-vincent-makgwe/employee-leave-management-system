@@ -1,28 +1,47 @@
-export default function Holidays() {
-  const holidays = [
-    { date: '2023-01-01', name: 'New Year' },
-    { date: '2023-04-07', name: 'Good Friday' },
-    { date: '2023-04-10', name: 'Easter Monday' },
-    { date: '2023-05-01', name: 'Labor Day' },
-    { date: '2023-12-25', name: 'Christmas' },
-    { date: '2023-12-26', name: 'Boxing Day' },
-  ];
+"use client";
 
+import holidayData from "../data/holidayData";
+
+const Holidays = () => {
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Company Holidays</h1>
-      <div className="bg-white p-6 rounded-lg shadow">
-        <ul className="divide-y divide-gray-200">
-          {holidays.map((holiday, index) => (
-            <li key={index} className="py-4">
-              <div className="flex items-center justify-between">
-                <p className="text-sm font-medium text-gray-900">{holiday.name}</p>
-                <p className="text-sm text-gray-500">{holiday.date}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <div>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2">Holidays</h2>
+        <p className="text-sm text-gray-600 mb-4">
+          Manage public holidays and company-specific holidays
+        </p>
+        <div className="bg-white shadow rounded-md overflow-x-auto">
+          <table className="min-w-full text-sm text-gray-700">
+            <thead>
+              <tr className="bg-white text-left">
+                <th className="px-6 py-3">Holiday Name</th>
+                <th className="px-6 py-3">Type</th>
+                <th className="px-6 py-3">Date</th>
+                <th className="px-6 py-3">Day of the Week</th>
+              </tr>
+            </thead>
+            <tbody>
+              {holidayData.map((holiday, index) => (
+                <tr key={index} className="border-t border-gray-100">
+                  <td className="px-6 py-4">{holiday.holidayName}</td>
+                  <td className="px-6 py-4">{holiday.type}</td>
+                  <td className="px-6 py-4">{holiday.date}</td>
+                  <td className="px-6 py-4">{holiday.dayOfWeek}</td>
+                </tr>
+              ))}
+              {holidayData.length === 0 && (
+                <tr>
+                  <td colSpan="4" className="text-center py-6 text-gray-400">
+                    No holiday data found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default Holidays;
