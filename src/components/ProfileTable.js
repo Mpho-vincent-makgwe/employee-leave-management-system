@@ -1,0 +1,84 @@
+import React from 'react';
+// import Link from 'next/Link';
+
+const ProfileTable = ({
+  profilePicture,
+  personalDetails,
+  jobDetails,
+  editable = false, // Default to false if not provided
+  theme = {
+    primaryColor: "indigo-700",
+    labelColor: "gray-600",
+    borderColor: "gray-300",
+  },
+}) => {
+  const renderProfilePicture = () => {
+    if (!profilePicture) return null;
+
+    return (
+      <div className="flex flex-col items-center w-1/4 min-w-[130px]">
+        {profilePicture.image ? (
+          <img
+            src={profilePicture.image}
+            alt="Profile"
+            className="w-32 h-32 rounded-full mb-2 object-cover"
+          />
+        //   <Link to={`/profile/edit'`}>Change Picture</Link>
+        ) : (
+          <div className="w-32 h-32 bg-gray-300 rounded-full mb-2"></div>
+        )}
+        {editable && profilePicture.changeText && (
+          <button className="text-sm text-indigo-600 hover:text-indigo-800 hover:underline">
+            {profilePicture.changeText}
+          </button>
+        )}
+      </div>
+    );
+  };
+
+  const renderDetailsSection = (title, details) => {
+    if (!details || details.length === 0) return null;
+
+    return (
+      <div className="space-y-4">
+        <h2 className={`text-xl font-semibold text-${theme.primaryColor}`}>
+          {title}
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {details.map((detail, index) => (
+            <div key={index}>
+              <label className={`block text-sm font-medium text-${theme.labelColor} mb-1`}>
+                {detail.label}
+              </label>
+              {editable ? (
+                <input
+                  type="text"
+                  defaultValue={detail.value}
+                  className={`border border-${theme.borderColor} px-4 py-2 rounded bg-white text-gray-800 w-full focus:ring-2 focus:ring-${theme.primaryColor} focus:border-transparent`}
+                />
+              ) : (
+                <div className={`border border-${theme.borderColor} px-4 py-2 rounded bg-white text-gray-800`}>
+                  {detail.value}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="bg-white p-6 mt-6 shadow-sm rounded">
+      <div className="flex flex-col md:flex-row gap-8">
+        {renderProfilePicture()}
+        <div className="flex-1 space-y-10">
+          {renderDetailsSection("Personal Details", personalDetails)}
+          {renderDetailsSection("Job Details", jobDetails)}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProfileTable;
