@@ -41,7 +41,7 @@ export default function NotificationPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-gray-50 px-6 py-10">
+    <main className="h-screen bg-gray-50 px-6 py-10">
       <div className=" mx-auto space-y-6">
         {/* Header */}
         <div className="bg-gray-50 rounded-lg p-6">
