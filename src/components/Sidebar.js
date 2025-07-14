@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import EtiLogo from './Logo';
 import { usePathname } from 'next/navigation';
-import { FiLogOut, FiSettings } from 'react-icons/fi';
+import { FiLogOut } from 'react-icons/fi';
 import { BsGridFill, BsCalendarEvent } from 'react-icons/bs';
 import { FaClipboardList, FaUserFriends, FaBell, FaUser } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
@@ -36,7 +36,7 @@ export default function Sidebar() {
 
   if (isTablet) {
     return (
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40">
         <nav className="p-2">
           <ul className="flex justify-around">
             {menu.slice(0, 5).map((item, idx) => {
@@ -66,7 +66,7 @@ export default function Sidebar() {
   return (
     <aside className="hidden lg:block w-64 bg-white h-screen fixed left-0 top-0 z-20">
       <div className="flex items-center h-16 px-4">
-        <EtiLogo/>
+        <EtiLogo className="h-8 w-auto" />
       </div>
       <nav className="p-4">
         <ul className="space-y-5">
