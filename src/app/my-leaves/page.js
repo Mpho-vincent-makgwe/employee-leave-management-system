@@ -1,24 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import Table from "@/components/Table";
 import leavesData from "../data/leavesData";
-import Link from "next/link";
-
-const TABS = ["All Requests", "Approved", "Pending", "Rejected"];
-
-const statusColor = {
-  Approved: "text-green-500",
-  Pending: "text-yellow-500",
-  Rejected: "text-red-500",
-};
+import { useState } from "react";
 
 const MyLeaves = () => {
-  const [activeTab, setActiveTab] = useState("All Requests");
+  const TABS = ["All", "Approved", "Pending", "Rejected"];
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredLeaves =
-    activeTab === "All Requests"
-      ? leavesData
-      : leavesData.filter((leave) => leave.status === activeTab);
+  const columns = [
+    { key: "type", title: "Leave Type" },
+    { key: "appliedOn", title: "Applied on" },
+    { key: "dateRange", title: "Date Range" },
+    { key: "duration", title: "Duration" },
+    { key: "status", title: "Status" },
+    { key: "action", title: "Action" },
+  ];
+
+  const formattedData = leavesData.map((leave) => ({
+    ...leave,
+    action: {
+      link: `/leave-details/${leave.id}`,
+      text: "View",
+    },
+  }));
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -33,73 +38,15 @@ const MyLeaves = () => {
           + Request New Leave
         </button>
       </div>
-      <div className="bg-white shadow mt-4 mb-4">
-        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 object-cover gap-4 mb-4 p-2">
-          {TABS.map((tab) => (
-            <button
-              key={tab}
-              className={`px-4 py-2 rounded ${
-                activeTab === tab
-                  ? "bg-[#4f46e5] text-white shadow"
-                  : "bg-white text-gray-600"
-              }`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-      </div>
 
-      <div className="bg-white shadow rounded-md overflow-x-auto">
-        <h3 className="text-[#4f46e5] text-sm font-semibold px-4 py-4">
-          Leave History
-        </h3>
-        <table className="min-w-full text-sm text-gray-700">
-          <thead>
-            <tr className="bg-white text-left">
-              <th className="px-6 py-3">Leave Type</th>
-              <th className="px-6 py-3">Applied on</th>
-              <th className="px-6 py-3">Date Range</th>
-              <th className="px-6 py-3">Duration</th>
-              <th className="px-6 py-3">Status</th>
-              <th className="px-6 py-3">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredLeaves.map((leave) => (
-              <tr key={leave.id} className="border-t border-gray-100">
-                <td className="px-6 py-4">{leave.type}</td>
-                <td className="px-6 py-4">{leave.appliedOn}</td>
-                <td className="px-6 py-4">{leave.dateRange}</td>
-                <td className="px-6 py-4">{leave.duration}</td>
-                <td
-                  className={`px-6 py-4 font-medium ${
-                    statusColor[leave.status]
-                  }`}
-                >
-                  {leave.status}
-                </td>
-                <td className="px-6 py-4 text-indigo-500 font-medium cursor-pointer hover:underline">
-                  <Link
-                    href={`/leave-details/${leave.id}`}
-                    className="text-indigo-500 hover:underline"
-                  >
-                    View
-                  </Link>
-                </td>
-              </tr>
-            ))}
-            {filteredLeaves.length === 0 && (
-              <tr>
-                <td colSpan="6" className="text-center py-6 text-gray-400">
-                  No leave requests found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      <Table
+        columns={columns}
+        data={formattedData}
+        filterTabs={TABS}
+        searchable={true}
+        sortable={true}
+        viewMoreLink={{ text: "Leave History" }}
+      />
     </div>
   );
 };
