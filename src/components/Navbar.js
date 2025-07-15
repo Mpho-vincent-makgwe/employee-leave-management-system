@@ -1,23 +1,28 @@
-// components/Navbar.js
 "use client";
 
 import { FaSearch, FaBell, FaUser } from 'react-icons/fa';
 import { FiSettings } from 'react-icons/fi';
 import { useState } from 'react';
 import EtiLogo from './Logo';
+import { useSearch } from '@/context/SearchContext';
 
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { searchTerm, setSearchTerm, searchHandler } = useSearch();
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    searchHandler(value);
+  };
 
   return (
     <header className="bg-white shadow-sm h-16 fixed top-0 right-0 left-0 lg:left-64 z-10 border-b border-gray-200">
       <div className="flex items-center justify-between h-full px-4 lg:px-6 w-full">
-        {/* Mobile Logo - hidden on desktop */}
         <div className="lg:hidden flex items-center">
           <EtiLogo className="h-8 w-auto" />
         </div>
 
-        {/* Search input - always visible */}
         <div className="relative w-full max-w-md mx-4">
           <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
             <FaSearch className="text-sm" />
@@ -26,10 +31,11 @@ export default function Navbar() {
             type="text"
             placeholder="Search..."
             className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            value={searchTerm}
+            onChange={handleSearch}
           />
         </div>
 
-        {/* Desktop: Original right side */}
         <div className="hidden lg:flex items-center gap-6">
           <div className="relative">
             <button className="p-2 rounded-full hover:bg-gray-100 transition">
@@ -42,7 +48,6 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile/Tablet: Settings dropdown */}
         <div className="lg:hidden relative">
           <button 
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
