@@ -1,6 +1,7 @@
 import SummaryCards from "@/components/SummaryCards";
 import NotificationPage from "@/components/PageComponents/NotificationPage";
 import MyLeaves from "./my-leaves/page";
+import UpcomingLeaves from "@/components/UpcomingLeaves";
 import Link from "next/link";
 
 const Dashboard = () => {
@@ -22,6 +23,14 @@ const Dashboard = () => {
 
       {/* Summary Cards */}
       <SummaryCards />
+
+      {/* My Leaves */}
+
+      {/* Upcoming + Notifications */}
+      <div className="grid md:grid-cols-2 gap-4 mb-6">
+        <UpcomingLeaves />
+        {/* <NotificationPage limit={2} /> */}
+      </div>
     </div>
   );
 };

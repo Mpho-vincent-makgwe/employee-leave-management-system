@@ -130,6 +130,52 @@ const leavesData = [
     reason:
       "I would like to request annual leave from July 3rd to July 7th 2025...",
   },
+  {
+    id: 10,
+    type: "Annual Leave",
+    appliedOn: "3rd July, 2025",
+    dateRange: "Nov 12 - Nov 17, 2025",
+    duration: "5 days",
+    status: "Approved",
+    department: "Design and Marketing",
+    role: "Product Designer",
+    manager: "Moses Daniel",
+    balance: "10 Days",
+    reason:
+      "I would like to request annual leave from July 3rd to July 7th 2025...",
+  },
+  {
+    id: 11,
+    type: "Sick Leave",
+    appliedOn: "3rd July, 2025",
+    dateRange: "Jul 3 - Jul 8, 2025",
+    startDate: "2025-11-06",
+    endDate: "2025-11-08",
+    duration: "5 days",
+    status: "Pending",
+    department: "Design and Marketing",
+    role: "Product Designer",
+    manager: "Moses Daniel",
+    balance: "10 Days",
+    reason:
+      "I would like to request annual leave from July 3rd to July 7th 2025...",
+  },
+  {
+    id: 12,
+    type: "Annual Leave",
+    appliedOn: "3rd July, 2025",
+    dateRange: "Jul 3 - Jul 8, 2025",
+    startDate: "2025-11-20",
+    endDate: "2025-11-30",
+    duration: "5 days",
+    status: "Approved",
+    department: "Design and Marketing",
+    role: "Product Designer",
+    manager: "Moses Daniel",
+    balance: "10 Days",
+    reason:
+      "I would like to request annual leave from July 3rd to July 7th 2025...",
+  },
 ];
 
 export default leavesData;
