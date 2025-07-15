@@ -1,9 +1,11 @@
+// MyLeaves component
 "use client";
 
 import Table from "@/components/Table";
 import leavesData from "../data/leavesData";
 import { useEffect } from "react";
 import { useSearch } from '@/context/SearchContext';
+import { Plus } from 'lucide-react';
 
 const MyLeaves = () => {
   const TABS = ["All", "Approved", "Pending", "Rejected"];
@@ -52,6 +54,7 @@ const MyLeaves = () => {
         filterTabs={TABS}
         sortable={true}
         viewMoreLink={{ text: "Leave History" }}
+        enablePagination={formattedData.length > 5} // Enable pagination if more than 10 items
       />
     </div>
   );
