@@ -3,6 +3,8 @@ import NotificationPage from "@/components/PageComponents/NotificationPage";
 import MyLeaves from "./my-leaves/page";
 import UpcomingLeaves from "@/components/UpcomingLeaves";
 import Link from "next/link";
+import DashboardNotifications from "@/components/DashboardNotifications";
+import DashboardLeavesPreview from "@/components/DashboardLeaves";
 
 const Dashboard = () => {
   return (
@@ -29,8 +31,9 @@ const Dashboard = () => {
       {/* Upcoming + Notifications */}
       <div className="grid md:grid-cols-2 gap-4 mb-6">
         <UpcomingLeaves />
-        {/* <NotificationPage limit={2} /> */}
+        <DashboardNotifications />
       </div>
+      <DashboardLeavesPreview />
     </div>
   );
 };
