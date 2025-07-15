@@ -2,11 +2,12 @@
 
 import Table from "@/components/Table";
 import leavesData from "../data/leavesData";
-import { useState } from "react";
+import { useEffect } from "react";
+import { useSearch } from '@/context/SearchContext';
 
 const MyLeaves = () => {
   const TABS = ["All", "Approved", "Pending", "Rejected"];
-  const [searchTerm, setSearchTerm] = useState("");
+  const { setSearchTerm } = useSearch();
 
   const columns = [
     { key: "type", title: "Leave Type" },
@@ -24,6 +25,12 @@ const MyLeaves = () => {
       text: "View",
     },
   }));
+
+  // Clear search term when component mounts and unmounts
+  useEffect(() => {
+    setSearchTerm('');
+    return () => setSearchTerm('');
+  }, [setSearchTerm]);
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -43,7 +50,6 @@ const MyLeaves = () => {
         columns={columns}
         data={formattedData}
         filterTabs={TABS}
-        searchable={true}
         sortable={true}
         viewMoreLink={{ text: "Leave History" }}
       />

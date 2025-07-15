@@ -2,14 +2,8 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { FaSort, FaSortUp, FaSortDown, FaSearch  } from "react-icons/fa";
+import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 import { useSearch } from '@/context/SearchContext';
-
-const statusColors = {
-  Approved: "text-green-500",
-  Pending: "text-yellow-500",
-  Rejected: "text-red-500",
-};
 
 const Table = ({
   title,
@@ -18,7 +12,11 @@ const Table = ({
   data,
   limit,
   viewMoreLink,
-  statusColorMap = statusColors,
+  statusColorMap = {
+    Approved: "text-green-500",
+    Pending: "text-yellow-500",
+    Rejected: "text-red-500"
+  },
   showRowNumbers = true,
   stripedRows = true,
   shadow = true,
@@ -32,23 +30,38 @@ const Table = ({
   const [filteredData, setFilteredData] = useState(data);
   const { searchTerm, setSearchHandler } = useSearch();
 
-  // Set the search handler when component mounts
+  const showAllData = !limit;
+  const hasMoreData = filteredData.length > currentLimit;
+  const displayData = showAllData ? filteredData : filteredData.slice(0, currentLimit);
+
   useEffect(() => {
-    setSearchHandler((term) => {
+    // Initialize with all data
+    setFilteredData(data);
+  }, [data]);
+
+  useEffect(() => {
+    const handler = (term = '') => {
       let result = [...data];
       
+      // Apply tab filtering if active
       if (filterTabs && activeTab && activeTab !== "All") {
         result = result.filter(item => item.status === activeTab);
       }
       
+      // Apply search if term exists
       if (term) {
-        const searchTerm = term.toLowerCase();
+        const searchTerm = String(term).toLowerCase();
         result = result.filter(item => 
-          columns.some(col => 
-            String(item[col.key]).toLowerCase().includes(searchTerm)
-        ));
+          columns.some(col => {
+            const value = item[col.key];
+            return value !== undefined && 
+                   value !== null && 
+                   String(value).toLowerCase().includes(searchTerm);
+          })
+        );
       }
       
+      // Apply sorting if configured
       if (sortConfig) {
         result.sort((a, b) => {
           if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -63,10 +76,16 @@ const Table = ({
       
       setFilteredData(result);
       setCurrentLimit(limit || result.length);
-    });
+    };
 
-    return () => setSearchHandler(() => () => {}); // Cleanup
-  }, [data, activeTab, sortConfig, filterTabs, limit, columns, setSearchHandler]);
+    // Set the handler
+    setSearchHandler(() => handler);
+    
+    // Apply initial filtering
+    handler(searchTerm);
+
+    return () => setSearchHandler(() => () => {});
+  }, [data, activeTab, sortConfig, filterTabs, limit, columns, searchTerm, setSearchHandler]);
 
   const requestSort = (key) => {
     if (!sortable) return;
@@ -94,7 +113,6 @@ const Table = ({
         </div>
       )}
 
-      {/* Filter Tabs */}
       {filterTabs && (
         <div className="bg-white shadow mt-4 mb-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4 p-2">
@@ -114,23 +132,6 @@ const Table = ({
           </div>
         </div>
       )}
-
-      {/* Search Input */}
-      {/* {searchable && (
-        <div className="mb-4 relative max-w-md">
-          <FaSearch className="absolute left-3 top-3 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              if (onSearch) onSearch(e.target.value);
-            }}
-          />
-        </div>
-      )} */}
 
       <div className={`bg-white ${shadow ? "shadow" : ""} ${rounded ? "rounded-md" : ""} overflow-x-auto`}>
         <div className="flex justify-between items-center p-4 border-b border-gray-100">

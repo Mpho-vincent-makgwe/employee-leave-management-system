@@ -16,7 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={GeistSans.className}>
-      <body className="bg-gray-50">
+      <body suppressHydrationWarning className="bg-gray-50">
         <SearchProvider>
           <div className="flex h-screen overflow-hidden">
             <Sidebar />

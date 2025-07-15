@@ -2,6 +2,8 @@
 
 import Table from "@/components/Table";
 import holidayData from "../data/holidayData";
+import { useEffect } from 'react';
+import { useSearch } from '@/context/SearchContext';
 
 const Holidays = () => {
   const columns = [
@@ -10,6 +12,14 @@ const Holidays = () => {
     { key: "date", title: "Date" },
     { key: "dayOfWeek", title: "Day of the Week" },
   ];
+
+  const { setSearchTerm } = useSearch();
+
+  // Clear search term when component mounts and unmounts
+  useEffect(() => {
+    setSearchTerm('');
+    return () => setSearchTerm('');
+  }, [setSearchTerm]);
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
