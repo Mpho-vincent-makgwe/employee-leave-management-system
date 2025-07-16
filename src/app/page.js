@@ -9,7 +9,7 @@ import Table from "@/components/Table";
 import Link from "next/link";
 import leavesData from "./data/leavesData";
 import { useSearch } from '@/context/SearchContext';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 const Dashboard = () => {
   const { setSearchTerm } = useSearch();
@@ -19,14 +19,29 @@ const Dashboard = () => {
     return () => setSearchTerm('');
   }, [setSearchTerm]);
 
-  const columns = [
+  const columns = useMemo(() => [
     { key: "type", title: "Leave Type" },
     { key: "appliedOn", title: "Applied on" },
     { key: "dateRange", title: "Date Range" },
-    { key: "status", title: "Status" }
-  ];
+    { key: "duration", title: "Duration" },
+    { key: "status", title: "Status" },
+    { 
+      key: "action", 
+      title: "Action",
+      render: (item) => (
+        <Link href={`/leave-details/${item.id}`} className="text-blue-600 hover:underline">
+          View
+        </Link>
+      )
+    }
+  ], []);
 
-  const recentLeaves = leavesData.slice(0, 5); // Show only 5 most recent leaves
+  const recentLeaves = useMemo(() => 
+    leavesData.slice(0, 5).map(leave => ({
+      ...leave,
+      action: { id: leave.id } // This will be used by the render function above
+    }))
+  , []);
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -45,36 +60,32 @@ const Dashboard = () => {
       </div>
 
       <SummaryCards />
+      <div className="grid md:grid-cols-2 gap-4 mb-6">
+        <UpcomingLeaves />
+        <DashboardNotifications />
+      </div>
 
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold">My Recent Leaves</h3>
+      <div className="mb-6 bg-white rounded-lg shadow p-4">
+        {/* <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-medium text-gray-800">Recent Leave Requests</h3>
           <Link 
             href="/my-leaves" 
-            className="text-[#4f46e5] text-sm font-medium hover:underline"
+            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
           >
-            View All Leaves
+            View All
           </Link>
-          {/* <CustomButton 
-          to="/my-leaves" 
-          icon={<Plus size={18} />} 
-          text="Request Leave" 
-        /> */}
-        </div>
+        </div> */}
         <Table
           columns={columns}
           data={recentLeaves}
           showRowNumbers={false}
-          viewMoreLink={{ href: "/my-leaves", text: "Leaves History" }}
           enablePagination={false}
           filterTabs={null}
           sortable={false}
+          title="Leave History"
+          titleClassName="text-blue-800 text-xl" 
+          viewMoreLink={{ text: "View More", href: "/my-leaves"  }}
         />
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-4 mb-6">
-        <UpcomingLeaves />
-        <DashboardNotifications />
       </div>
     </div>
   );

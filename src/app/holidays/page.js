@@ -30,6 +30,9 @@ const Holidays = () => {
         <Table
           columns={columns}
           data={holidayData}
+          title="Holidays"
+          titleClassName="text-blue-800 " // Custom title styling
+          // subtitle="Manage public holidays and company-specific holidays"
           viewMoreLink={{ text: "Holiday List" }}
           enablePagination={holidayData.length > 5}
         />

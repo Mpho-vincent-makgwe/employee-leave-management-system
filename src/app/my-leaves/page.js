@@ -66,6 +66,8 @@ const MyLeaves = () => {
         data={formattedData}
         filterTabs={TABS}
         sortable={true}
+        title="Leave History"
+        titleClassName="text-blue-800" 
         viewMoreLink={{ text: "Leave History" }}
         enablePagination={formattedData.length > 5}
       />

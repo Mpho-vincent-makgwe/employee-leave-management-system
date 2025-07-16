@@ -7,7 +7,9 @@ import { useSearch } from '@/context/SearchContext';
 
 const Table = ({
   title,
+  titleClassName = "",
   subtitle,
+  subtitleClassName = "",
   columns,
   data,
   limit,
@@ -110,14 +112,33 @@ const Table = ({
   }, []);
 
   return (
-    <div className={`bg-gray-50 ${title || subtitle ? "p-6" : ""}`}>
-      {(title || subtitle) && (
-        <div className="mb-6">
-          {title && <h2 className="text-2xl font-semibold text-gray-800">{title}</h2>}
-          {subtitle && <p className="text-sm text-gray-600">{subtitle}</p>}
+    <div className={`bg-white ${shadow ? "shadow" : ""} ${rounded ? "rounded-md" : ""} overflow-hidden`}>
+      {/* Table Header with Title and View More Link */}
+      <div className="flex justify-between items-center p-4 border-b border-gray-100">
+        <div>
+          {title && (
+            <h3 className={`text-lg font-semibold ${titleClassName || "text-gray-800"}`}>
+              {title}
+            </h3>
+          )}
+          {subtitle && (
+            <p className={`text-sm ${subtitleClassName || "text-gray-500"}`}>
+              {subtitle}
+            </p>
+          )}
         </div>
-      )}
+        
+        {viewMoreLink?.href && (
+          <Link
+            href={viewMoreLink.href}
+            className="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline"
+          >
+            {viewMoreLink.text || "View All"}
+          </Link>
+        )}
+      </div>
 
+      {/* Original Filtering UI - Restored */}
       {filterTabs && (
         <div className="bg-white shadow mt-4 mb-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4 p-2">
@@ -138,33 +159,7 @@ const Table = ({
         </div>
       )}
 
-      <div className={`bg-white ${shadow ? "shadow" : ""} ${rounded ? "rounded-md" : ""} overflow-x-auto`}>
-        <div className="flex justify-between items-center p-4 border-b border-gray-100">
-          {viewMoreLink?.text && !enablePagination && (
-            <h3 className="text-[#4f46e5] text-sm font-semibold">
-              {viewMoreLink.text}
-            </h3>
-          )}
-          
-          {!showAllData && !enablePagination && hasMoreData && (
-            <button
-              onClick={() => setCurrentLimit(currentLimit + (limit || 5))}
-              className="text-[#4f46e5] text-sm font-medium hover:underline"
-            >
-              View More
-            </button>
-          )}
-          
-          {!showAllData && !enablePagination && !hasMoreData && viewMoreLink?.href && (
-            <Link
-              href={viewMoreLink.href}
-              className="text-[#4f46e5] text-sm font-medium hover:underline"
-            >
-              View All
-            </Link>
-          )}
-        </div>
-
+      <div className="overflow-x-auto">
         <table className="min-w-full text-sm text-gray-700">
           <thead>
             <tr className="bg-white text-left">
@@ -197,6 +192,13 @@ const Table = ({
                   </td>
                 )}
                 {columns.map((column) => {
+                  if (column.render) {
+                    return (
+                      <td key={`${rowIndex}-${column.key}`} className="px-6 py-4">
+                        {column.render(row)}
+                      </td>
+                    );
+                  }
                   if (column.key === "status" && statusColorMap[row[column.key]]) {
                     return (
                       <td
@@ -242,56 +244,67 @@ const Table = ({
             )}
           </tbody>
         </table>
+      </div>
 
-        {enablePagination && totalPages > 1 && (
-          <div className="flex justify-between items-center p-4 border-t border-gray-100">
-            <div>
-              <span className="text-sm text-gray-600">
-                Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
-                {Math.min(currentPage * itemsPerPage, filteredData.length)} of{' '}
-                {filteredData.length} entries
-              </span>
-            </div>
-            <div className="flex space-x-2">
+      {!enablePagination && !showAllData && hasMoreData && (
+        <div className="px-4 py-3 border-t border-gray-100 text-center">
+          <button
+            onClick={() => setCurrentLimit(currentLimit + (limit || 5))}
+            className="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline"
+          >
+            Load More
+          </button>
+        </div>
+      )}
+
+      {enablePagination && totalPages > 1 && (
+        <div className="flex justify-between items-center p-4 border-t border-gray-100">
+          <div>
+            <span className="text-sm text-gray-600">
+              Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
+              {Math.min(currentPage * itemsPerPage, filteredData.length)} of{' '}
+              {filteredData.length} entries
+            </span>
+          </div>
+          <div className="flex space-x-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`px-3 py-1 rounded-md ${
+                currentPage === 1
+                  ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                  : 'bg-[#4f46e5] text-white hover:bg-indigo-700'
+              }`}
+            >
+              Previous
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
               <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
+                key={page}
+                onClick={() => handlePageChange(page)}
                 className={`px-3 py-1 rounded-md ${
-                  currentPage === 1
-                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                    : 'bg-[#4f46e5] text-white hover:bg-indigo-700'
+                  currentPage === page
+                    ? 'bg-[#4f46e5] text-white'
+                    : 'bg-white text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                Previous
+                {page}
               </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`px-3 py-1 rounded-md ${
-                    currentPage === page
-                      ? 'bg-[#4f46e5] text-white'
-                      : 'bg-white text-gray-600 hover:bg-gray-100'
-                  }`}
-                >
-                  {page}
-                </button>
-              ))}
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className={`px-3 py-1 rounded-md ${
-                  currentPage === totalPages
-                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                    : 'bg-[#4f46e5] text-white hover:bg-indigo-700'
-                }`}
-                >
-                Next
-              </button>
-            </div>
+            ))}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`px-3 py-1 rounded-md ${
+                currentPage === totalPages
+                  ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                  : 'bg-[#4f46e5] text-white hover:bg-indigo-700'
+              }`}
+            >
+              Next
+            </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
