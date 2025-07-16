@@ -34,16 +34,13 @@ const Table = ({
 
   const itemsPerPage = 5;
   
-  // Memoized filtered data calculation
   const filteredResults = useMemo(() => {
     let result = [...data];
     
-    // Apply tab filtering
     if (filterTabs && activeTab && activeTab !== "All") {
       result = result.filter(item => item.status === activeTab);
     }
     
-    // Apply search filtering
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(item => 
@@ -56,7 +53,6 @@ const Table = ({
       );
     }
     
-    // Apply sorting
     if (sortConfig) {
       result.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -72,14 +68,12 @@ const Table = ({
     return result;
   }, [data, activeTab, searchTerm, sortConfig, filterTabs, columns]);
 
-  // Update filtered data when filteredResults changes
   useEffect(() => {
     setFilteredData(filteredResults);
     setCurrentLimit(limit || filteredResults.length);
     setCurrentPage(1);
   }, [filteredResults, limit]);
 
-  // Calculate display data
   const displayData = useMemo(() => {
     if (enablePagination) {
       return filteredData.slice(
@@ -291,7 +285,7 @@ const Table = ({
                     ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
                     : 'bg-[#4f46e5] text-white hover:bg-indigo-700'
                 }`}
-              >
+                >
                 Next
               </button>
             </div>
