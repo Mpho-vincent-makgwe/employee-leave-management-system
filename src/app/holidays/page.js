@@ -1,4 +1,3 @@
-// Holidays component
 "use client";
 
 import Table from "@/components/Table";
@@ -16,7 +15,6 @@ const Holidays = () => {
 
   const { setSearchTerm } = useSearch();
 
-  // Clear search term when component mounts and unmounts
   useEffect(() => {
     setSearchTerm('');
     return () => setSearchTerm('');
@@ -33,7 +31,7 @@ const Holidays = () => {
           columns={columns}
           data={holidayData}
           viewMoreLink={{ text: "Holiday List" }}
-          enablePagination={holidayData.length > 5} // Enable pagination if more than 10 items
+          enablePagination={holidayData.length > 5}
         />
       </div>
     </div>

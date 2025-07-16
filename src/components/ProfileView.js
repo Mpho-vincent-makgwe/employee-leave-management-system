@@ -1,6 +1,5 @@
 import React from 'react';
-import { Plus
-} from 'lucide-react';
+import { Plus } from 'lucide-react';
 import CustomButton from './Buttons/CustomButton';
 import ProfileTable from './ProfileTable';
 

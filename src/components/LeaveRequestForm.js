@@ -29,7 +29,7 @@ const LeaveRequestForm = () => {
 
     <LeaveSubmitModel show={showModal} onClose={() => setShowModal(false)} />
 
-    <div classname="px-6 py-10">
+    <div className="px-6 py-10">
           <h2 className="text-2xl font-semibold text-gray-800">Request Leave</h2>
           <p className="text-sm text-gray-600">
             Fill out the form below to submit your leave request.

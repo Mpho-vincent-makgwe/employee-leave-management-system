@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 import { useSearch } from '@/context/SearchContext';
 
@@ -23,86 +23,78 @@ const Table = ({
   rounded = true,
   filterTabs = null,
   sortable = false,
-  enablePagination = false, // New prop to enable pagination
+  enablePagination = false,
 }) => {
   const [currentLimit, setCurrentLimit] = useState(limit || data.length);
   const [activeTab, setActiveTab] = useState(filterTabs?.[0] || null);
   const [sortConfig, setSortConfig] = useState(null);
   const [filteredData, setFilteredData] = useState(data);
-  const [currentPage, setCurrentPage] = useState(1); // New state for pagination
-  const { searchTerm, setSearchHandler } = useSearch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const { searchTerm } = useSearch();
 
   const itemsPerPage = 5;
-  const showAllData = !limit;
-  const hasMoreData = filteredData.length > currentLimit;
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   
-  // Calculate display data based on pagination or view more
-  const displayData = enablePagination 
-    ? filteredData.slice(
+  // Memoized filtered data calculation
+  const filteredResults = useMemo(() => {
+    let result = [...data];
+    
+    // Apply tab filtering
+    if (filterTabs && activeTab && activeTab !== "All") {
+      result = result.filter(item => item.status === activeTab);
+    }
+    
+    // Apply search filtering
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      result = result.filter(item => 
+        columns.some(col => {
+          const value = item[col.key];
+          return value !== undefined && 
+                 value !== null && 
+                 String(value).toLowerCase().includes(term);
+        })
+      );
+    }
+    
+    // Apply sorting
+    if (sortConfig) {
+      result.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    
+    return result;
+  }, [data, activeTab, searchTerm, sortConfig, filterTabs, columns]);
+
+  // Update filtered data when filteredResults changes
+  useEffect(() => {
+    setFilteredData(filteredResults);
+    setCurrentLimit(limit || filteredResults.length);
+    setCurrentPage(1);
+  }, [filteredResults, limit]);
+
+  // Calculate display data
+  const displayData = useMemo(() => {
+    if (enablePagination) {
+      return filteredData.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
-      )
-    : showAllData 
-      ? filteredData 
-      : filteredData.slice(0, currentLimit);
+      );
+    }
+    return filteredData.slice(0, currentLimit);
+  }, [filteredData, currentPage, currentLimit, enablePagination, itemsPerPage]);
 
-  useEffect(() => {
-    // Initialize with all data
-    setFilteredData(data);
-    setCurrentPage(1); // Reset to first page when data changes
-  }, [data]);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const showAllData = !limit;
+  const hasMoreData = filteredData.length > currentLimit;
 
-  useEffect(() => {
-    const handler = (term = '') => {
-      let result = [...data];
-      
-      // Apply tab filtering if active
-      if (filterTabs && activeTab && activeTab !== "All") {
-        result = result.filter(item => item.status === activeTab);
-      }
-      
-      // Apply search if term exists
-      if (term) {
-        const searchTerm = String(term).toLowerCase();
-        result = result.filter(item => 
-          columns.some(col => {
-            const value = item[col.key];
-            return value !== undefined && 
-                   value !== null && 
-                   String(value).toLowerCase().includes(searchTerm);
-          })
-        );
-      }
-      
-      // Apply sorting if configured
-      if (sortConfig) {
-        result.sort((a, b) => {
-          if (a[sortConfig.key] < b[sortConfig.key]) {
-            return sortConfig.direction === 'ascending' ? -1 : 1;
-          }
-          if (a[sortConfig.key] > b[sortConfig.key]) {
-            return sortConfig.direction === 'ascending' ? 1 : -1;
-          }
-          return 0;
-        });
-      }
-      
-      setFilteredData(result);
-      setCurrentLimit(limit || result.length);
-      setCurrentPage(1); // Reset to first page when filtering changes
-    };
-
-    // Set the handler
-    setSearchHandler(() => handler);
-    
-    // Apply initial filtering
-    handler(searchTerm);
-
-    return () => setSearchHandler(() => () => {});
-  }, [data, activeTab, sortConfig, filterTabs, limit, columns, searchTerm, setSearchHandler]);
-
-  const requestSort = (key) => {
+  const requestSort = useCallback((key) => {
     if (!sortable) return;
     
     let direction = 'ascending';
@@ -110,18 +102,18 @@ const Table = ({
       direction = 'descending';
     }
     setSortConfig({ key, direction });
-  };
+  }, [sortable, sortConfig]);
 
-  const getSortIcon = (key) => {
+  const getSortIcon = useCallback((key) => {
     if (!sortConfig || sortConfig.key !== key) return <FaSort className="ml-1 opacity-30" />;
     return sortConfig.direction === 'ascending' 
       ? <FaSortUp className="ml-1" /> 
       : <FaSortDown className="ml-1" />;
-  };
+  }, [sortConfig]);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     setCurrentPage(page);
-  };
+  }, []);
 
   return (
     <div className={`bg-gray-50 ${title || subtitle ? "p-6" : ""}`}>
@@ -257,7 +249,6 @@ const Table = ({
           </tbody>
         </table>
 
-        {/* Pagination controls */}
         {enablePagination && totalPages > 1 && (
           <div className="flex justify-between items-center p-4 border-t border-gray-100">
             <div>
