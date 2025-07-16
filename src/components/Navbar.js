@@ -2,19 +2,17 @@
 
 import { FaSearch, FaBell, FaUser } from 'react-icons/fa';
 import { FiSettings } from 'react-icons/fi';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import EtiLogo from './Logo';
 import { useSearch } from '@/context/SearchContext';
 
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { searchTerm, setSearchTerm, searchHandler } = useSearch();
+  const { searchTerm, setSearchTerm } = useSearch();
 
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    searchHandler(value);
-  };
+  const handleSearch = useCallback((e) => {
+    setSearchTerm(e.target.value);
+  }, [setSearchTerm]);
 
   return (
     <header className="bg-white shadow-sm h-16 fixed top-0 right-0 left-0 lg:left-64 z-10 border-b border-gray-200">

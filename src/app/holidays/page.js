@@ -15,7 +15,6 @@ const Holidays = () => {
 
   const { setSearchTerm } = useSearch();
 
-  // Clear search term when component mounts and unmounts
   useEffect(() => {
     setSearchTerm('');
     return () => setSearchTerm('');
@@ -32,6 +31,7 @@ const Holidays = () => {
           columns={columns}
           data={holidayData}
           viewMoreLink={{ text: "Holiday List" }}
+          enablePagination={holidayData.length > 5}
         />
       </div>
     </div>

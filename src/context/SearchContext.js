@@ -1,20 +1,20 @@
 "use client";
 
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useCallback } from 'react';
 
 const SearchContext = createContext();
 
 export const SearchProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchHandler, setSearchHandler] = useState(() => () => {});
-  const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  // Stable context value that won't change unnecessarily
+  const contextValue = {
+    searchTerm,
+    setSearchTerm
+  };
 
   return (
-    <SearchContext.Provider value={{ searchTerm, setSearchTerm, searchHandler, setSearchHandler }}>
+    <SearchContext.Provider value={contextValue}>
       {children}
     </SearchContext.Provider>
   );
@@ -27,8 +27,6 @@ export const useSearch = () => {
     return {
       searchTerm: '',
       setSearchTerm: () => {},
-      searchHandler: () => {},
-      setSearchHandler: () => {}
     };
   }
   return context;
