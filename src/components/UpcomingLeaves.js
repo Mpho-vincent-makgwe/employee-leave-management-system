@@ -33,7 +33,7 @@ const UpcomingLeaves = () => {
 
   return (
     <div className="bg-white shadow rounded-xl p-6">
-      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+      <h2 className="text-xl mb-4 flex items-center gap-2">
         <span>
           <Calendar />
         </span>{" "}

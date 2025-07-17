@@ -1,4 +1,6 @@
-const Logout = () => {
-  <></>;
+import Logout from "@/components/Logout";
+
+const LogoutPage = () => {
+  return <Logout />;
 };
-export default Logout;
+export default LogoutPage;
