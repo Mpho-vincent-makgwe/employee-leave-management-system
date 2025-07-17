@@ -1,5 +1,6 @@
-import React from 'react';
+import React from "react";
 // import Link from 'next/Link';
+import Image from "next/image";
 
 const ProfileTable = ({
   profilePicture,
@@ -18,13 +19,15 @@ const ProfileTable = ({
     return (
       <div className="flex flex-col items-center w-1/4 min-w-[130px]">
         {profilePicture.image ? (
-          <img
+          <Image
             src={profilePicture.image}
             alt="Profile"
             className="w-32 h-32 rounded-full mb-2 object-cover"
+            width={128}
+            height={128}
           />
-        //   <Link to={`/profile/edit'`}>Change Picture</Link>
         ) : (
+          //   <Link to={`/profile/edit'`}>Change Picture</Link>
           <div className="w-32 h-32 bg-gray-300 rounded-full mb-2"></div>
         )}
         {editable && profilePicture.changeText && (
@@ -47,7 +50,9 @@ const ProfileTable = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {details.map((detail, index) => (
             <div key={index}>
-              <label className={`block text-sm font-medium text-${theme.labelColor} mb-1`}>
+              <label
+                className={`block text-sm font-medium text-${theme.labelColor} mb-1`}
+              >
                 {detail.label}
               </label>
               {editable ? (
@@ -57,7 +62,9 @@ const ProfileTable = ({
                   className={`border border-${theme.borderColor} px-4 py-2 rounded bg-white text-gray-800 w-full focus:ring-2 focus:ring-${theme.primaryColor} focus:border-transparent`}
                 />
               ) : (
-                <div className={`border border-${theme.borderColor} px-4 py-2 rounded bg-white text-gray-800`}>
+                <div
+                  className={`border border-${theme.borderColor} px-4 py-2 rounded bg-white text-gray-800`}
+                >
                   {detail.value}
                 </div>
               )}
