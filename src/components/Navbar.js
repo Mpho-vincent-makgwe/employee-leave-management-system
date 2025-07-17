@@ -19,6 +19,24 @@ export default function Navbar() {
     [setSearchTerm]
   );
 
+  // Simulate authentication
+  // const [isAuthenticated, setIsAuthenticated] = useState(true); // Toggle to false to simulate a logged-out user
+
+  // const dummyUser = {
+  //   initials: "NP",
+  //   email: "neo@example.com",
+  // };
+
+  // const handleLogin = () => {
+  //   console.log("Logging in...");
+  //   setIsAuthenticated(true);
+  // };
+
+  // const handleLogout = () => {
+  //   console.log("Logging out...");
+  //   setIsAuthenticated(false);
+  // };
+
   return (
     <header className="bg-white shadow-sm h-16 fixed top-0 right-0 left-0 lg:left-64 z-10 border-b border-gray-200">
       <div className="flex items-center justify-between h-full px-4 lg:px-6 w-full">
@@ -50,7 +68,8 @@ export default function Navbar() {
           // isAuthenticated={isAuthenticated}
           // onLogin={handleLogin}
           // onLogout={handleLogout}
-          // userInitials={user?.name?.[0]?.toUpperCase() || "?"}
+          // userInitials={isAuthenticated ? dummyUser.initials : undefined}
+          // userEmail={isAuthenticated ? dummyUser.email : undefined}
           />
         </div>
 
