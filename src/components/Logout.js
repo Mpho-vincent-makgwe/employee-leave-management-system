@@ -1,17 +1,21 @@
+'use client';
 import Image from "next/image";
 import React from "react";
 import { X } from "lucide-react";
 import { useUser } from "@/context/UserContext";
 
 const Logout = ({ isOpen, onConfirm, onCancel }) => {
-  // if (!isOpen) return null;
-const { logout } = useUser();
+  const { logout } = useUser();
 
-  const handleConfirm = () => {
-    logout();
-    if (onConfirm) onConfirm();
+  const handleConfirm = async () => {
+    try {
+      await logout();
+      if (onConfirm) onConfirm();
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
-
+  
   return (
     <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50 p-10">
       <div className="relative bg-white rounded-2xl shadow-xl p-8 w-full max-w-lg text-center p-15">

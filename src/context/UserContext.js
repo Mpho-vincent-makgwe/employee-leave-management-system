@@ -10,7 +10,6 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // Wrap checkAuth in useCallback to prevent unnecessary recreations
   const checkAuth = useCallback(async () => {
     try {
       const response = await fetch('/api/auth/userauth', {
@@ -34,7 +33,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     checkAuth();
-  }, [checkAuth]); // Only depend on checkAuth
+  }, [checkAuth]);
 
   const login = async (email, password) => {
     try {
@@ -54,9 +53,7 @@ export const UserProvider = ({ children }) => {
         throw new Error(data.error || 'Login failed');
       }
 
-      // Update user state directly from the response
       setUser(data.user || null);
-      
       return { success: true, user: data.user };
     } catch (error) {
       console.error('Login error:', error);
@@ -69,7 +66,7 @@ export const UserProvider = ({ children }) => {
   const logout = async () => {
     try {
       await fetch('/api/auth/userauth', {
-        method: 'POST',
+        method: 'DELETE',
         credentials: 'include'
       });
       setUser(null);

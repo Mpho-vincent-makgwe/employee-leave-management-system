@@ -3,7 +3,25 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request) {
   try {
-    const { email, password } = await request.json();
+    // Ensure the request has a body
+    if (!request.body) {
+      return NextResponse.json(
+        { error: 'Request body is required' },
+        { status: 400 }
+      );
+    }
+
+    let requestBody;
+    try {
+      requestBody = await request.json();
+    } catch (parseError) {
+      return NextResponse.json(
+        { error: 'Invalid JSON format in request body' },
+        { status: 400 }
+      );
+    }
+
+    const { email, password } = requestBody;
     
     if (!email || !password) {
       return NextResponse.json(
@@ -28,7 +46,6 @@ export async function POST(request) {
         id: user.id,
         email: user.email,
         name: user.name 
-        // Include only non-sensitive data
       }
     });
 
@@ -65,10 +82,23 @@ export async function GET(request) {
         id: user.id,
         email: user.email,
         name: user.name
-        // Return only non-sensitive data
       }
     });
   } catch (error) {
     return NextResponse.json({ user: null });
+  }
+}
+
+// Add logout endpoint
+export async function DELETE(request) {
+  try {
+    const response = NextResponse.json({ success: true });
+    response.cookies.delete('auth-token');
+    return response;
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
