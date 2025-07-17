@@ -17,7 +17,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">
-        <h2 className="text-3xl font-bold text-center text-indigo-900 mb-2">
+        <h2 className="text-3xl font-bold text-center text-indigo-600 mb-2">
           Welcome Back
         </h2>
         <p className="text-center text-gray-500 mb-6">
@@ -31,7 +31,7 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="you@example.com"
-              className="w-full"
+              className="w-full h-8 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -45,7 +45,7 @@ export default function LoginPage() {
             <input
               type="password"
               placeholder="••••••••"
-              className="w-full"
+              className="w-full h-8 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -62,7 +62,7 @@ export default function LoginPage() {
           </div>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-600">
+        {/* <p className="mt-6 text-center text-sm text-gray-600">
           Do not have an account?{" "}
           <a
             href="/register"
@@ -70,7 +70,7 @@ export default function LoginPage() {
           >
             Sign up
           </a>
-        </p>
+        </p> */}
       </div>
     </div>
   );
