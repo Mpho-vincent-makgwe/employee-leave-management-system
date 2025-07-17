@@ -1,23 +1,23 @@
 // components/Sidebar.js
 "use client";
 
-import Link from 'next/link';
-import EtiLogo from './Logo';
-import { usePathname } from 'next/navigation';
-import { FiLogOut } from 'react-icons/fi';
-import { BsGridFill, BsCalendarEvent } from 'react-icons/bs';
-import { FaClipboardList, FaUserFriends, FaBell, FaUser } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
+import Link from "next/link";
+import EtiLogo from "./Logo";
+import { usePathname } from "next/navigation";
+import { FiLogOut } from "react-icons/fi";
+import { BsGridFill, BsCalendarEvent } from "react-icons/bs";
+import { FaClipboardList, FaUserFriends, FaBell, FaUser } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
 const menu = [
-  { label: 'Dashboard', icon: <BsGridFill />, href: '/' },
-  { label: 'Request Leave', icon: <FaClipboardList />, href: '/request-leave' },
-  { label: 'My Leaves', icon: <FaUserFriends />, href: '/my-leaves' },
-  { label: 'Holidays', icon: <BsCalendarEvent />, href: '/holidays' },
-  { label: 'Policies', icon: <FaClipboardList />, href: '/policies' },
-  { label: 'Notifications', icon: <FaBell />, href: '/notifications' },
-  { label: 'Profile', icon: <FaUser />, href: '/profile' },
-  { label: 'Logout', icon: <FiLogOut />, href: '/logout' },
+  { label: "Dashboard", icon: <BsGridFill />, href: "/" },
+  { label: "Request Leave", icon: <FaClipboardList />, href: "/request-leave" },
+  { label: "My Leaves", icon: <FaUserFriends />, href: "/my-leaves" },
+  { label: "Holidays", icon: <BsCalendarEvent />, href: "/holidays" },
+  { label: "Policies", icon: <FaClipboardList />, href: "/policies" },
+  { label: "Notifications", icon: <FaBell />, href: "/notifications" },
+  { label: "Profile", icon: <FaUser />, href: "/profile" },
+  { label: "Logout", icon: <FiLogOut />, href: "/auth/logout" },
 ];
 
 export default function Sidebar() {
@@ -30,8 +30,8 @@ export default function Sidebar() {
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   if (isTablet) {
@@ -47,8 +47,8 @@ export default function Sidebar() {
                     href={item.href}
                     className={`flex items-center justify-center p-3 rounded-full text-lg transition-colors ${
                       isActive
-                        ? 'bg-indigo-100 text-indigo-600'
-                        : 'text-indigo-600 hover:bg-indigo-50'
+                        ? "bg-indigo-100 text-indigo-600"
+                        : "text-indigo-600 hover:bg-indigo-50"
                     }`}
                     title={item.label}
                   >
@@ -78,11 +78,15 @@ export default function Sidebar() {
                   href={item.href}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-[#4F46E5] text-white'
-                      : 'text-gray-800 hover:bg-indigo-50'
+                      ? "bg-[#4F46E5] text-white"
+                      : "text-gray-800 hover:bg-indigo-50"
                   }`}
                 >
-                  <span className={`text-lg ${isActive ? 'text-white' : 'text-indigo-600'}`}>
+                  <span
+                    className={`text-lg ${
+                      isActive ? "text-white" : "text-indigo-600"
+                    }`}
+                  >
                     {item.icon}
                   </span>
                   {item.label}

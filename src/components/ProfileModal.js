@@ -45,7 +45,7 @@ export default function ProfileModal({
           transition={{ duration: 0.2 }}
           className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg border z-50"
         >
-          <Link href="/log-in">
+          <Link href="/auth/log-in">
             <button
               className="w-full text-left bg-indigo-600 px-4 py-4 text-sm text-white hover:bg-white hover:text-indigo-600 rounded-t-xl"
               onClick={() => {
