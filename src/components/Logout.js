@@ -1,9 +1,16 @@
 import Image from "next/image";
 import React from "react";
 import { X } from "lucide-react";
+import { useUser } from "@/context/UserContext";
 
 const Logout = ({ isOpen, onConfirm, onCancel }) => {
   // if (!isOpen) return null;
+const { logout } = useUser();
+
+  const handleConfirm = () => {
+    logout();
+    if (onConfirm) onConfirm();
+  };
 
   return (
     <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50 p-10">
@@ -38,7 +45,7 @@ const Logout = ({ isOpen, onConfirm, onCancel }) => {
           {/* Buttons */}
           <div className="flex flex-col gap-4 mt-6">
             <button
-              onClick={onConfirm}
+              onClick={handleConfirm}
               className="w-full bg-[#D72323] hover:bg-[#b71c1c] text-white py-2 rounded-xl font-semibold"
             >
               Yes

@@ -81,7 +81,7 @@ export default function Navbar() {
                 Profile
               </a>
               <a
-                href="/logout"
+                href="/auth/logout"
                 className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50"
               >
                 <FiSettings className="mr-3 text-indigo-600" />

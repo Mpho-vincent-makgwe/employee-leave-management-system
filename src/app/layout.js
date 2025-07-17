@@ -4,6 +4,7 @@ import { GeistSans } from 'geist/font/sans';
 import './globals.css';
 
 import { SearchProvider } from '@/context/SearchContext';
+import { UserProvider } from "@/context/UserContext";
 
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={GeistSans.className}>
       <body suppressHydrationWarning className="bg-gray-50">
+        <UserProvider>
         <SearchProvider>
           <div className="flex h-screen overflow-hidden">
             <Sidebar />
@@ -28,6 +30,7 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </SearchProvider>
+        </UserProvider>
       </body>
     </html>
   );
