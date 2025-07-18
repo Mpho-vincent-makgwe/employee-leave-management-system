@@ -34,7 +34,6 @@ export default function LoginPage() {
       if (!result.success) {
         throw new Error(result.error || 'Login failed. Please try again.');
       }
-      // Redirect immediately after successful login
       router.push(redirect);
     } catch (err) {
       setError(err.message);
@@ -47,26 +46,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">
-<<<<<<< HEAD
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-indigo-900 mb-2">
-            Welcome Back
-          </h2>
-          <p className="text-gray-500">
-            Please log in to your account
-          </p>
-        </div>
-        
-        {error && (
-          <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-lg text-sm">
-            {error}
-          </div>
-        )}
-        
-        <form onSubmit={handleLogin} className="space-y-5">
-          <div className="space-y-1">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-=======
         <h2 className="text-3xl font-bold text-center text-indigo-600 mb-2">
           Welcome Back
         </h2>
@@ -76,7 +55,6 @@ export default function LoginPage() {
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
->>>>>>> 6344e5ca5f72b1844380b6a7a9320d1a760735b5
               Email
             </label>
             <input
@@ -84,15 +62,9 @@ export default function LoginPage() {
               name="email"
               type="email"
               placeholder="you@example.com"
-<<<<<<< HEAD
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               value={formData.email}
               onChange={handleChange}
-=======
               className="w-full h-8 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
->>>>>>> 6344e5ca5f72b1844380b6a7a9320d1a760735b5
               required
               autoComplete="email"
             />
@@ -107,15 +79,9 @@ export default function LoginPage() {
               name="password"
               type="password"
               placeholder="••••••••"
-<<<<<<< HEAD
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               value={formData.password}
               onChange={handleChange}
-=======
               className="w-full h-8 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
->>>>>>> 6344e5ca5f72b1844380b6a7a9320d1a760735b5
               required
               autoComplete="current-password"
               minLength={6}
@@ -139,19 +105,6 @@ export default function LoginPage() {
           />
         </form>
 
-<<<<<<< HEAD
-        <div className="mt-6 text-center text-sm">
-          <p className="text-gray-600">
-            Don&lsquo;t have an account?{' '}
-            <a
-              href="/auth/register"
-              className="text-indigo-600 hover:text-indigo-800 font-medium"
-            >
-              Sign up
-            </a>
-          </p>
-        </div>
-=======
         {/* <p className="mt-6 text-center text-sm text-gray-600">
           Do not have an account?{" "}
           <a
@@ -161,7 +114,6 @@ export default function LoginPage() {
             Sign up
           </a>
         </p> */}
->>>>>>> 6344e5ca5f72b1844380b6a7a9320d1a760735b5
       </div>
     </div>
   );
