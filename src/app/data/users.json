@@ -12,5 +12,12 @@
     "password": "mpho123",
     "name": "Mpho Vincent",
     "role": "Employee"
+  },
+  {
+    "id": 3,
+    "email": "neo@neo.com",
+    "password": "neo123",
+    "name": "Neo Phetoane",
+    "role": "Employee"
   }
 ]

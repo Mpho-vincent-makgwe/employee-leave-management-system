@@ -10,9 +10,12 @@ import Link from "next/link";
 import leavesData from "./data/leavesData";
 import { useSearch } from '@/context/SearchContext';
 import { useEffect, useMemo } from 'react';
+import { useUser } from "@/context/UserContext";
+
 
 const Dashboard = () => {
   const { setSearchTerm } = useSearch();
+  const { user, loading } = useUser();
 
   useEffect(() => {
     setSearchTerm('');
@@ -43,13 +46,26 @@ const Dashboard = () => {
     }))
   , []);
 
+  if (loading) {
+    return (
+      <header className="bg-white shadow-sm h-16 fixed top-0 right-0 left-0 lg:left-64 z-10 border-b border-gray-200">
+        <div className="flex items-center justify-between h-full px-4 lg:px-6 w-full">
+          {/* Loading skeleton */}
+          <div className="animate-pulse flex items-center space-x-4">
+            <div className="rounded-full bg-gray-200 h-8 w-8"></div>
+            <div className="h-4 bg-gray-200 rounded w-24"></div>
+          </div>
+        </div>
+      </header>
+    );
+  }
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="flex justify-between items-center mb-6">
         <div>
           <h2 className="text-xl font-semibold">Dashboard Overview</h2>
           <p className="text-sm text-gray-600">
-            Welcome back Paul, this is your leave overview
+            Welcome back {`${user.name}`}, this is your leave overview
           </p>
         </div>
         <CustomButton 
@@ -66,15 +82,6 @@ const Dashboard = () => {
       </div>
 
       <div className="mb-6 bg-white rounded-lg shadow p-4">
-        {/* <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium text-gray-800">Recent Leave Requests</h3>
-          <Link 
-            href="/my-leaves" 
-            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-          >
-            View All
-          </Link>
-        </div> */}
         <Table
           columns={columns}
           data={recentLeaves}
