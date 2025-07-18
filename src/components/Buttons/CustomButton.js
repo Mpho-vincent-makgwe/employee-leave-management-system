@@ -4,15 +4,15 @@ import Link from 'next/link';
 
 const CustomButton = ({
   text,
-  to = null, // For links
-  onClick = null, // For button actions
-  icon = null, // Optional icon
-  type = 'button', // Button type (button, submit, reset)
-  variant = 'primary', // primary, secondary, outline, ghost, etc.
-  size = 'medium', // small, medium, large
+  to = null,
+  onClick = null,
+  icon = null,
+  type = 'button',
+  variant = 'primary',
+  size = 'medium',
   disabled = false,
   className = '',
-  newTab = false, // Open link in new tab
+  newTab = false,
 }) => {
   // Variant styles
   const variantStyles = {
@@ -23,15 +23,21 @@ const CustomButton = ({
     danger: 'bg-red-500 text-white hover:bg-red-600',
   };
 
-  // Size styles
+  // Size styles - now responsive with mobile-first approach
   const sizeStyles = {
-    small: 'px-3 py-1.5 text-sm',
-    medium: 'px-4 py-2 text-base',
-    large: 'px-6 py-3 text-lg',
+    small: 'px-2 py-1 text-xs sm:px-3 sm:py-1.5 sm:text-sm',
+    medium: 'px-3 py-1.5 text-sm sm:px-4 sm:py-2 sm:text-base',
+    large: 'px-4 py-2 text-base sm:px-6 sm:py-3 sm:text-lg',
   };
 
-  // Base button classes
-  const baseClasses = 'inline-flex items-center justify-center gap-2 rounded-md font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5C4DFF] focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+  // Base button classes with responsive adjustments
+  const baseClasses = `
+    inline-flex items-center justify-center gap-1 sm:gap-2 
+    rounded-md font-medium transition-all 
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5C4DFF] 
+    focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed
+    whitespace-nowrap
+  `;
 
   // Combine all classes
   const buttonClasses = `${baseClasses} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`;
@@ -45,7 +51,7 @@ const CustomButton = ({
         rel={newTab ? 'noopener noreferrer' : ''}
         className={buttonClasses}
       >
-        {icon}
+        {icon && <span className="text-base">{icon}</span>}
         <span>{text}</span>
       </Link>
     );
@@ -59,7 +65,7 @@ const CustomButton = ({
       disabled={disabled}
       className={buttonClasses}
     >
-      {icon}
+      {icon && <span className="text-base">{icon}</span>}
       <span>{text}</span>
     </button>
   );
