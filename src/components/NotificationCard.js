@@ -1,4 +1,4 @@
-import { CheckCircle, Clock, XCircle } from 'lucide-react';
+import { CheckCircle, Clock, XCircle } from "lucide-react";
 
 const statusStyles = {
   approved: {
@@ -19,15 +19,21 @@ const NotificationCard = ({ status, title, message, timeAgo }) => {
   const styles = statusStyles[status];
 
   return (
-    <div className={`flex justify-between items-start p-4 rounded-lg border ${styles.border} bg-white shadow-sm`}>
-      <div className="flex items-start gap-3">
+    <div className="flex justify-between items-start w-[1046px] h-[106px] px-4 py-8 border-[0.6px] border-[#D0D5DD] rounded-[4px] bg-white gap-3 shadow-sm">
+      <div className="flex items-start gap-[12px]">
         {styles.icon}
         <div>
-          <h4 className="text-md text-black font-semibold">{title}</h4>
-          <p className="text-sm text-gray-600">{message}</p>
+          <h4 className="w-[249px] h-[22px] text-[14px] leading-[22px] font-semibold text-[#2C2C2E]">
+            {title}
+          </h4>
+          <p className="w-[570px] h-[24px] text-[12px] leading-[20px] font-normal text-[#2C2C2E]">
+            {message}
+          </p>
         </div>
       </div>
-      <span className="text-sm text-gray-400 whitespace-nowrap">{timeAgo}</span>
+      <span className="text-[12px] text-gray-400 whitespace-nowrap">
+        {timeAgo}
+      </span>
     </div>
   );
 };

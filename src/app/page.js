@@ -4,12 +4,13 @@ import SummaryCards from "@/components/SummaryCards";
 import UpcomingLeaves from "@/components/UpcomingLeaves";
 import DashboardNotifications from "@/components/DashboardNotifications";
 import CustomButton from "@/components/Buttons/CustomButton";
-import { Plus } from 'lucide-react';
+import { Plus } from "lucide-react";
 import Table from "@/components/Table";
 import Link from "next/link";
 import leavesData from "./data/leavesData";
-import { useSearch } from '@/context/SearchContext';
-import { useEffect, useMemo } from 'react';
+import { useSearch } from "@/context/SearchContext";
+import { useEffect, useMemo } from "react";
+import Heading from "@/components/Heading";
 import { useUser } from "@/context/UserContext";
 
 
@@ -18,33 +19,41 @@ const Dashboard = () => {
   const { user, loading } = useUser();
 
   useEffect(() => {
-    setSearchTerm('');
-    return () => setSearchTerm('');
+    setSearchTerm("");
+    return () => setSearchTerm("");
   }, [setSearchTerm]);
 
-  const columns = useMemo(() => [
-    { key: "type", title: "Leave Type" },
-    { key: "appliedOn", title: "Applied on" },
-    { key: "dateRange", title: "Date Range" },
-    { key: "duration", title: "Duration" },
-    { key: "status", title: "Status" },
-    { 
-      key: "action", 
-      title: "Action",
-      render: (item) => (
-        <Link href={`/leave-details/${item.id}`} className="text-blue-600 hover:underline">
-          View
-        </Link>
-      )
-    }
-  ], []);
+  const columns = useMemo(
+    () => [
+      { key: "type", title: "Leave Type" },
+      { key: "appliedOn", title: "Applied on" },
+      { key: "dateRange", title: "Date Range" },
+      { key: "duration", title: "Duration" },
+      { key: "status", title: "Status" },
+      {
+        key: "action",
+        title: "Action",
+        render: (item) => (
+          <Link
+            href={`/leave-details/${item.id}`}
+            className="text-blue-600 hover:underline"
+          >
+            View
+          </Link>
+        ),
+      },
+    ],
+    []
+  );
 
-  const recentLeaves = useMemo(() => 
-    leavesData.slice(0, 5).map(leave => ({
-      ...leave,
-      action: { id: leave.id } // This will be used by the render function above
-    }))
-  , []);
+  const recentLeaves = useMemo(
+    () =>
+      leavesData.slice(0, 5).map((leave) => ({
+        ...leave,
+        action: { id: leave.id }, // This will be used by the render function above
+      })),
+    []
+  );
 
   if (loading) {
     return (
@@ -63,15 +72,15 @@ const Dashboard = () => {
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-xl font-semibold">Dashboard Overview</h2>
-          <p className="text-sm text-gray-600">
-            Welcome back {`${user.name}`}, this is your leave overview
-          </p>
+          <Heading
+            title="Dashboard"
+            subtitle="Welcome back {`${user.name}`}, this is your leave overview"
+          />
         </div>
-        <CustomButton 
-          to="/request-leave" 
-          icon={<Plus size={18} />} 
-          text="Request Leave" 
+        <CustomButton
+          to="/request-leave"
+          icon={<Plus size={18} />}
+          text="Request Leave"
         />
       </div>
 
@@ -90,8 +99,8 @@ const Dashboard = () => {
           filterTabs={null}
           sortable={false}
           title="Leave History"
-          titleClassName="text-blue-800 text-xl" 
-          viewMoreLink={{ text: "View More", href: "/my-leaves"  }}
+          titleClassName="text-blue-800 text-xl"
+          viewMoreLink={{ text: "View More", href: "/my-leaves" }}
         />
       </div>
     </div>

@@ -8,9 +8,9 @@ const ProfileTable = ({
   jobDetails,
   editable = false, // Default to false if not provided
   theme = {
-    primaryColor: "indigo-700",
-    labelColor: "gray-600",
-    borderColor: "gray-300",
+    primaryColor: "#4F46E5",
+    labelColor: "#2C2C2E",
+    borderColor: "#D0D5DD",
   },
 }) => {
   const renderProfilePicture = () => {
@@ -49,21 +49,39 @@ const ProfileTable = ({
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {details.map((detail, index) => (
-            <div key={index}>
-              <label
-                className={`block text-sm font-medium text-${theme.labelColor} mb-1`}
-              >
+            <div
+              key={index}
+              className="flex flex-col gap-[5px] w-[343px]" // Horizontal flow with 5px gap
+            >
+              <label className={`text-sm font-medium text-${theme.labelColor}`}>
                 {detail.label}
               </label>
+
               {editable ? (
                 <input
                   type="text"
                   defaultValue={detail.value}
-                  className={`border border-${theme.borderColor} px-4 py-2 rounded bg-white text-gray-800 w-full focus:ring-2 focus:ring-${theme.primaryColor} focus:border-transparent`}
+                  className={`
+        h-[50px]
+        w-full
+        px-[16px]
+        rounded-[4px]
+        border border-${theme.borderColor}
+        bg-white text-gray-800
+        focus:ring focus:ring-${theme.primaryColor}
+        focus:border-transparent
+      `}
                 />
               ) : (
                 <div
-                  className={`border border-${theme.borderColor} px-4 py-2 rounded bg-white text-gray-800`}
+                  className={`
+        h-[50px]
+        w-full
+        px-[16px]
+        rounded-[4px]
+        border border-${theme.borderColor}
+        bg-white text-gray-800 flex items-center
+      `}
                 >
                   {detail.value}
                 </div>
