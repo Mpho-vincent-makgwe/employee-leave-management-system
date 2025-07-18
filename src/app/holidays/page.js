@@ -2,8 +2,9 @@
 
 import Table from "@/components/Table";
 import holidayData from "../data/holidayData";
-import { useEffect } from 'react';
-import { useSearch } from '@/context/SearchContext';
+import { useEffect } from "react";
+import { useSearch } from "@/context/SearchContext";
+import Heading from "@/components/Heading";
 
 const Holidays = () => {
   const columns = [
@@ -16,17 +17,17 @@ const Holidays = () => {
   const { setSearchTerm } = useSearch();
 
   useEffect(() => {
-    setSearchTerm('');
-    return () => setSearchTerm('');
+    setSearchTerm("");
+    return () => setSearchTerm("");
   }, [setSearchTerm]);
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div>
-        <h2 className="text-2xl font-semibold text-gray-800 mb-2">Holidays</h2>
-        <p className="text-sm text-gray-600 mb-4">
-          Manage public holidays and company-specific holidays
-        </p>
+        <Heading
+          title="Holidays"
+          subtitle=" Manage public holidays and company-specific holidays"
+        />
         <Table
           columns={columns}
           data={holidayData}

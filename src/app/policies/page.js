@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Heading from "@/components/Heading";
 
 const policies = [
   {
@@ -26,10 +27,10 @@ const policies = [
 export default function Policies() {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-1">
-        Leave Policy
-      </h1>
-      <p className="text-gray-500 mb-6">Manage leave policies and guidelines</p>
+      <Heading
+        title="Leave Policies"
+        subtitle="Manage leave policies and guidelines"
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {policies.map((policy) => (

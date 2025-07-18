@@ -1,8 +1,8 @@
-import React from 'react';
-import { Plus
-} from 'lucide-react';
-import CustomButton from './Buttons/CustomButton';
-import ProfileTable from './ProfileTable';
+import React from "react";
+import { Plus } from "lucide-react";
+import CustomButton from "./Buttons/CustomButton";
+import ProfileTable from "./ProfileTable";
+import Heading from "./Heading";
 
 const ProfileEdit = () => {
   const personalDetails = [
@@ -32,29 +32,29 @@ const ProfileEdit = () => {
   return (
     <div className=" mx-auto px-6 py-10">
       <div className="flex justify-between items-center mb-6">
-  <div>
-    <h2 className="text-2xl font-semibold text-gray-800">Edit Profile</h2>
-    <p className="text-sm text-gray-600">
-      Manage your personal information and account settings.
-    </p>
-  </div>
-  <CustomButton to="/profile"  text="Save" />
-</div>
+        <div>
+          <Heading
+            title="Edit Profile"
+            subtitle="  Manage your personal information and account settings."
+          />
+        </div>
+        <CustomButton to="/profile" text="Save" />
+      </div>
 
       <ProfileTable
         profilePicture={{
-            changeText: "Change Picture",
-            image: "/profilepic.png",
+          changeText: "Change Picture",
+          image: "/profilepic.png",
         }}
         personalDetails={personalDetails}
         jobDetails={jobDetails}
         editable={true}
         theme={{
-            primaryColor: "indigo-700",
-            labelColor: "gray-600",
-            borderColor: "gray-300",
+          primaryColor: "indigo-700",
+          labelColor: "gray-600",
+          borderColor: "gray-300",
         }}
-        />
+      />
     </div>
   );
 };
