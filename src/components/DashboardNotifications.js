@@ -54,7 +54,7 @@ export default function DashboardNotifications() {
     <div className="bg-white rounded-lg shadow p-6 space-y-4">
       {/* Custom Heading */}
       <div className="flex justify-between items-center">
-        <h2 className="text-xl mb-4 flex items-center gap-2 text-gray-900">
+        <h2 className="text-lg mb-4 flex items-center gap-2 text-[#2C2C2E]">
           <span>
             <Bell />
           </span>{" "}

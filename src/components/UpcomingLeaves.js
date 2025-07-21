@@ -32,8 +32,8 @@ const UpcomingLeaves = () => {
     .slice(0, 2); // Only show the next 2 upcoming leaves
 
   return (
-    <div className="bg-white shadow rounded-xl p-6">
-      <h2 className="text-xl mb-4 flex items-center gap-2">
+    <div className="bg-white shadow rounded-xl p-6 h-full">
+      <h2 className="text-lg mb-8 flex items-center gap-2 text-[#2C2C2E]">
         <span>
           <Calendar />
         </span>{" "}
@@ -46,10 +46,12 @@ const UpcomingLeaves = () => {
         upcoming.map((leave) => (
           <div
             key={leave.id}
-            className="border border-gray-200 shadow-sm rounded-lg p-4 mb-4 flex justify-between items-start"
+            className="flex justify-between items-start w-full h-[106px] px-4 py-5 border-[0.6px] border-[#D0D5DD] rounded-[4px] bg-white gap-3 shadow-sm mb-3"
           >
             <div>
-              <p className="font-medium">{leave.type}</p>
+              <p className="w-full h-full text-[14px] leading-[22px] font-semibold text-[#2C2C2E]">
+                {leave.type}
+              </p>
               <p className="text-sm text-gray-600">
                 {formatDate(leave.startDate)} to {formatDate(leave.endDate)} (
                 {getDuration(leave.startDate, leave.endDate)}{" "}

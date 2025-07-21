@@ -31,14 +31,22 @@ const SummaryCards = () => {
       ].map((item, i) => (
         <div
           key={i}
-          className="bg-white rounded-xl p-10 shadow flex flex-col sm:flex-row items-center gap-8"
+          className="w-full h-[124px] p-4 border-[0.4px] border-gray-200 rounded-[8px] bg-white flex flex-col sm:flex-row items-center gap-[10px] shadow"
         >
-          <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center">
+          {/* Icon */}
+          <div className="w-[40px] h-[40px] bg-indigo-600 rounded-full flex items-center justify-center">
             {item.icon}
           </div>
+
+          {/* Text Block */}
           <div className="text-center sm:text-left">
-            <div className="text-sm text-gray-600 mb-2">{item.label}</div>
-            <div className="text-2xl font-bold text-[#3A3A3C]">
+            {/* Label */}
+            <div className="text-[10px] font-normal leading-[16px] text-gray-600 w-[110px] h-[16px] mb-1">
+              {item.label}
+            </div>
+
+            {/* Value */}
+            <div className="w-[110px] h-[24px] text-[20px] font-semibold leading-[32px] text-[#3A3A3C]">
               {item.value}
             </div>
           </div>

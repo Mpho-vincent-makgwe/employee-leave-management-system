@@ -13,7 +13,6 @@ import { useEffect, useMemo } from "react";
 import Heading from "@/components/Heading";
 import { useUser } from "@/context/UserContext";
 
-
 const Dashboard = () => {
   const { setSearchTerm } = useSearch();
   const { user, loading } = useUser();
@@ -85,9 +84,13 @@ const Dashboard = () => {
       </div>
 
       <SummaryCards />
-      <div className="grid md:grid-cols-2 gap-4 mb-6">
-        <UpcomingLeaves />
-        <DashboardNotifications />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="md:col-span-1">
+          <UpcomingLeaves />
+        </div>
+        <div className="md:col-span-2">
+          <DashboardNotifications />
+        </div>
       </div>
 
       <div className="mb-6 bg-white rounded-lg shadow p-4">

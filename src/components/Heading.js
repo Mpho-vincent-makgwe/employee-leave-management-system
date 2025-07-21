@@ -6,7 +6,7 @@ export default function Heading({
 }) {
   return (
     <div
-      className={`w-[416px] h-[58px] ${
+      className={`w-full h-full ${
         position ? "absolute top-[118px] left-[314px]" : ""
       } ${className}`}
     >
