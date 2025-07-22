@@ -7,11 +7,13 @@ import EtiLogo from "./Logo";
 import { useSearch } from "@/context/SearchContext";
 import { useUser } from "@/context/UserContext";
 import Link from "next/link";
+import ProfileModal from "./ProfileModal";
 
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { searchTerm, setSearchTerm } = useSearch();
   const { user, loading } = useUser();
+  const [showUserModal, setShowUserModal] = useState(false);
 
   const handleSearch = useCallback(
     (e) => {
@@ -78,20 +80,36 @@ export default function Navbar() {
 
           {/* User Info */}
           {user ? (
-            <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold">
-                {getInitials(user.name)}
+            showUserModal ? (
+              // Show ONLY the modal when open
+              <ProfileModal onClose={() => setShowUserModal(false)} />
+            ) : (
+              // Show user info when modal is not open
+              <div className="flex items-center space-x-3">
+                <div className="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-semibold">
+                  {getInitials(user.name)}
+                </div>
+                <div className="flex flex-col text-sm leading-tight">
+                  <span className="font-medium text-indigo-600">
+                    {user.name}
+                  </span>
+                  <span className="text-gray-600 text-xs">
+                    {user.role || "Employee"}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowUserModal(true)}
+                  className="text-indigo-600 hover:text-gray-700 relative"
+                >
+                  <FaChevronDown className="text-xs" />
+                </button>
               </div>
-              <div className="flex flex-col text-sm leading-tight">
-                <span className="font-medium text-indigo-600">{user.name}</span>
-                <span className="text-gray-600 text-xs">{user.role || "Employee"}</span>
-              </div>
-              <button className="text-indigo-600 hover:text-gray-700">
-                <FaChevronDown className="text-xs" />
-              </button>
-            </div>
+            )
           ) : (
-            <Link href="/auth/log-in" className="text-sm text-indigo-600 hover:text-indigo-800">
+            <Link
+              href="/auth/log-in"
+              className="text-sm text-indigo-600 hover:text-indigo-800"
+            >
               Sign In
             </Link>
           )}
