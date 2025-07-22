@@ -29,13 +29,13 @@ const LeaveRequestForm = () => {
     <>
       <LeaveSubmitModel show={showModal} onClose={() => setShowModal(false)} />
 
-      <div className="px-6">
+      <div className="bg-gray-100">
         <Heading
           title="Request Leave"
           subtitle="Fill out the form below to submit your leave request."
         />
       </div>
-      <div className=" mx-auto p-8 pt-8 mt-8 bg-white shadow rounded-md">
+      <div className="mx-auto p-8 bg-white shadow rounded-md">
         <form
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
           onSubmit={handleSubmit}

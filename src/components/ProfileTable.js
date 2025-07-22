@@ -94,7 +94,7 @@ const ProfileTable = ({
   };
 
   return (
-    <div className="bg-white p-6 mt-6 shadow-sm rounded">
+    <div className="bg-white p-6 shadow-sm rounded">
       <div className="flex flex-col md:flex-row gap-8">
         {renderProfilePicture()}
         <div className="flex-1 space-y-10">

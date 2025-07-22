@@ -48,16 +48,14 @@ export default function NotificationPage() {
   ];
 
   return (
-    <main className="h-screen bg-gray-50">
-      <div className=" mx-auto space-y-6">
+    <main className="bg-gray-100">
+      <div className="mx-auto">
         {/* Header */}
-        <div className="bg-gray-50 rounded-lg p-6">
-          <Heading
-            title="Notifications"
-            subtitle="Stay updated with your leave requests and approvals."
-            // position={true}
-          />
-        </div>
+        <Heading
+          title="Notifications"
+          subtitle="Stay updated with your leave requests and approvals."
+          // position={true}
+        />
 
         {/* Notifications */}
         {/* Notifications Container */}

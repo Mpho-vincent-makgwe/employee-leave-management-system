@@ -30,8 +30,8 @@ const ProfileView = () => {
   ];
 
   return (
-    <div className=" mx-auto px-6 py-10">
-      <div className="flex justify-between items-center mb-6">
+    <div className="bg-gray-100">
+      <div className="flex justify-between items-center">
         <div>
           <Heading
             title="Profile"

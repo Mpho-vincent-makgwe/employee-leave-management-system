@@ -22,7 +22,7 @@ const Holidays = () => {
   }, [setSearchTerm]);
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="bg-gray-100">
       <div>
         <Heading
           title="Holidays"

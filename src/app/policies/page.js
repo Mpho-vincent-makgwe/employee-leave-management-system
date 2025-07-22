@@ -26,7 +26,7 @@ const policies = [
 
 export default function Policies() {
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="bg-gray-100">
       <Heading
         title="Leave Policies"
         subtitle="Manage leave policies and guidelines"
