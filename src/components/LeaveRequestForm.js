@@ -9,7 +9,7 @@ const LeaveRequestForm = () => {
     duration: "5 days",
     startDate: "",
     endDate: "",
-    reason: "ftt",
+    reason: "",
   });
 
   const [showModal, setShowModal] = useState(false);
@@ -41,20 +41,23 @@ const LeaveRequestForm = () => {
           onSubmit={handleSubmit}
         >
           {/* Leave Type */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 px-10">
+          <div className="relative">
+            <label className="block text-sm font-medium text-gray-700 mb-1 ">
               Leave Type
             </label>
             <select
               name="leaveType"
               value={formData.leaveType}
               onChange={handleChange}
-              className="w-full border border-[#D0D5DD] rounded-md p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full appearance-none border border-[#D0D5DD] rounded-md p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option>Personal Leave</option>
               <option>Sick Leave</option>
               <option>Vacation</option>
             </select>
+            <div className="pointer-events-none absolute top-10 right-4 text-gray-500">
+              ▼
+            </div>
           </div>
 
           {/* Duration */}

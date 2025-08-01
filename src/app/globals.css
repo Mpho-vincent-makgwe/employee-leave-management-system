@@ -1,3 +1,6 @@
 @import "tailwindcss";
 
-
+/* Hide vertical scrollbar for the whole page */
+body {
+  overflow-y: hidden;
+}

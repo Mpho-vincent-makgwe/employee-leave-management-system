@@ -48,7 +48,7 @@ export default function NotificationPage() {
   ];
 
   return (
-    <main className="bg-gray-100">
+    <main className="bg-gray-100 overflow-hidden">
       <div className="mx-auto">
         {/* Header */}
         <Heading
@@ -59,7 +59,7 @@ export default function NotificationPage() {
 
         {/* Notifications */}
         {/* Notifications Container */}
-        <div className="bg-white justify-center items-center center  rounded-lg overflow-y-auto p-4 space-y-4">
+        <div className="bg-white justify-center items-center center  rounded-lg overflow-hidden p-4 space-y-4">
           {leaveRequests.map((req, index) => (
             <NotificationCard key={index} {...req} />
           ))}

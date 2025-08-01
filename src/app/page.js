@@ -35,7 +35,7 @@ const Dashboard = () => {
         render: (item) => (
           <Link
             href={`/leave-details/${item.id}`}
-            className="text-blue-600 hover:underline"
+            className="text-[#AD8330] hover:underline"
           >
             View
           </Link>
@@ -102,7 +102,7 @@ const Dashboard = () => {
           filterTabs={null}
           sortable={false}
           title="Leave History"
-          titleClassName="text-blue-800 text-xl"
+          titleClassName="text-[#2C2C2E] text-lg"
           viewMoreLink={{ text: "View More", href: "/my-leaves" }}
         />
       </div>

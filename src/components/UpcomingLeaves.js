@@ -46,7 +46,7 @@ const UpcomingLeaves = () => {
         upcoming.map((leave) => (
           <div
             key={leave.id}
-            className="flex justify-between items-start w-full h-[106px] px-4 py-5 border-[0.6px] border-[#D0D5DD] rounded-[4px] bg-white gap-3 shadow-sm mb-3"
+            className="flex justify-between items-start w-full h-[106px] px-4 py-5 border-[0.6px] border-[#D0D5DD] rounded-[4px] bg-white gap-3 mb-3"
           >
             <div>
               <p className="w-full h-full text-[14px] leading-[22px] font-semibold text-[#2C2C2E]">

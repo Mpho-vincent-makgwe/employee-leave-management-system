@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
-import { useSearch } from '@/context/SearchContext';
+import { useSearch } from "@/context/SearchContext";
 
 const Table = ({
   title,
@@ -17,7 +17,7 @@ const Table = ({
   statusColorMap = {
     Approved: "text-green-500",
     Pending: "text-yellow-500",
-    Rejected: "text-red-500"
+    Rejected: "text-red-500",
   },
   showRowNumbers = true,
   stripedRows = true,
@@ -35,38 +35,40 @@ const Table = ({
   const { searchTerm } = useSearch();
 
   const itemsPerPage = 5;
-  
+
   const filteredResults = useMemo(() => {
     let result = [...data];
-    
+
     if (filterTabs && activeTab && activeTab !== "All") {
-      result = result.filter(item => item.status === activeTab);
+      result = result.filter((item) => item.status === activeTab);
     }
-    
+
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
-      result = result.filter(item => 
-        columns.some(col => {
+      result = result.filter((item) =>
+        columns.some((col) => {
           const value = item[col.key];
-          return value !== undefined && 
-                 value !== null && 
-                 String(value).toLowerCase().includes(term);
+          return (
+            value !== undefined &&
+            value !== null &&
+            String(value).toLowerCase().includes(term)
+          );
         })
       );
     }
-    
+
     if (sortConfig) {
       result.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? -1 : 1;
+          return sortConfig.direction === "ascending" ? -1 : 1;
         }
         if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? 1 : -1;
+          return sortConfig.direction === "ascending" ? 1 : -1;
         }
         return 0;
       });
     }
-    
+
     return result;
   }, [data, activeTab, searchTerm, sortConfig, filterTabs, columns]);
 
@@ -90,34 +92,53 @@ const Table = ({
   const showAllData = !limit;
   const hasMoreData = filteredData.length > currentLimit;
 
-  const requestSort = useCallback((key) => {
-    if (!sortable) return;
-    
-    let direction = 'ascending';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
-    }
-    setSortConfig({ key, direction });
-  }, [sortable, sortConfig]);
+  const requestSort = useCallback(
+    (key) => {
+      if (!sortable) return;
 
-  const getSortIcon = useCallback((key) => {
-    if (!sortConfig || sortConfig.key !== key) return <FaSort className="ml-1 opacity-30" />;
-    return sortConfig.direction === 'ascending' 
-      ? <FaSortUp className="ml-1" /> 
-      : <FaSortDown className="ml-1" />;
-  }, [sortConfig]);
+      let direction = "ascending";
+      if (
+        sortConfig &&
+        sortConfig.key === key &&
+        sortConfig.direction === "ascending"
+      ) {
+        direction = "descending";
+      }
+      setSortConfig({ key, direction });
+    },
+    [sortable, sortConfig]
+  );
+
+  const getSortIcon = useCallback(
+    (key) => {
+      if (!sortConfig || sortConfig.key !== key)
+        return <FaSort className="ml-1 opacity-30" />;
+      return sortConfig.direction === "ascending" ? (
+        <FaSortUp className="ml-1" />
+      ) : (
+        <FaSortDown className="ml-1" />
+      );
+    },
+    [sortConfig]
+  );
 
   const handlePageChange = useCallback((page) => {
     setCurrentPage(page);
   }, []);
 
   return (
-    <div className={`bg-white ${shadow ? "shadow" : ""} ${rounded ? "rounded-md" : ""} overflow-hidden`}>
+    <div
+      className={`bg-white ${shadow ? "shadow" : ""} ${
+        rounded ? "rounded-md" : ""
+      } overflow-hidden`}
+    >
       {/* Table Header with Title and View More Link */}
       <div className="flex justify-between items-center p-4 border-b border-gray-100">
         <div>
           {title && (
-            <h3 className={`text-lg font-semibold ${titleClassName || "text-gray-800"}`}>
+            <h3
+              className={`text-lg font-md ${titleClassName || "text-gray-800"}`}
+            >
               {title}
             </h3>
           )}
@@ -127,11 +148,11 @@ const Table = ({
             </p>
           )}
         </div>
-        
+
         {viewMoreLink?.href && (
           <Link
             href={viewMoreLink.href}
-            className="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline"
+            className="text-[#4F46E5] text-sm font-medium hover:underline"
           >
             {viewMoreLink.text || "View All"}
           </Link>
@@ -165,12 +186,16 @@ const Table = ({
             <tr className="bg-white text-left">
               {showRowNumbers && <th className="px-6 py-3">#</th>}
               {columns.map((column) => (
-                <th 
-                  key={column.key} 
+                <th
+                  key={column.key}
                   className="px-6 py-3"
                   onClick={() => sortable && requestSort(column.key)}
                 >
-                  <div className={`flex items-center ${sortable ? 'cursor-pointer hover:text-indigo-600' : ''}`}>
+                  <div
+                    className={`flex items-center ${
+                      sortable ? "cursor-pointer hover:text-indigo-600" : ""
+                    }`}
+                  >
                     {column.title}
                     {sortable && getSortIcon(column.key)}
                   </div>
@@ -182,28 +207,38 @@ const Table = ({
             {displayData.map((row, rowIndex) => (
               <tr
                 key={rowIndex}
-                className={`${stripedRows && rowIndex % 2 === 0 ? "bg-gray-50" : "bg-white"} border-t border-gray-100`}
+                className={`${
+                  stripedRows && rowIndex % 2 === 0 ? "bg-gray-50" : "bg-white"
+                } border-t border-gray-100`}
               >
                 {showRowNumbers && (
                   <td className="px-6 py-4 text-gray-500">
-                    {enablePagination 
-                      ? (currentPage - 1) * itemsPerPage + rowIndex + 1 
+                    {enablePagination
+                      ? (currentPage - 1) * itemsPerPage + rowIndex + 1
                       : rowIndex + 1}
                   </td>
                 )}
                 {columns.map((column) => {
                   if (column.render) {
                     return (
-                      <td key={`${rowIndex}-${column.key}`} className="px-6 py-4">
+                      <td
+                        key={`${rowIndex}-${column.key}`}
+                        className="px-6 py-4"
+                      >
                         {column.render(row)}
                       </td>
                     );
                   }
-                  if (column.key === "status" && statusColorMap[row[column.key]]) {
+                  if (
+                    column.key === "status" &&
+                    statusColorMap[row[column.key]]
+                  ) {
                     return (
                       <td
                         key={`${rowIndex}-${column.key}`}
-                        className={`px-6 py-4 ${statusColorMap[row[column.key]]}`}
+                        className={`px-6 py-4 ${
+                          statusColorMap[row[column.key]]
+                        }`}
                       >
                         {row[column.key]}
                       </td>
@@ -213,7 +248,7 @@ const Table = ({
                     return (
                       <td
                         key={`${rowIndex}-${column.key}`}
-                        className="px-6 py-4 text-indigo-500 font-medium"
+                        className="px-6 py-4 text-[#AD8330] font-medium"
                       >
                         <Link
                           href={row[column.key].link}
@@ -250,7 +285,7 @@ const Table = ({
         <div className="px-4 py-3 border-t border-gray-100 text-center">
           <button
             onClick={() => setCurrentLimit(currentLimit + (limit || 5))}
-            className="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline"
+            className="text-[#4F46E5] text-sm font-medium hover:underline"
           >
             Load More
           </button>
@@ -261,8 +296,8 @@ const Table = ({
         <div className="flex justify-between items-center p-4 border-t border-gray-100">
           <div>
             <span className="text-sm text-gray-600">
-              Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
-              {Math.min(currentPage * itemsPerPage, filteredData.length)} of{' '}
+              Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+              {Math.min(currentPage * itemsPerPage, filteredData.length)} of{" "}
               {filteredData.length} entries
             </span>
           </div>
@@ -272,8 +307,8 @@ const Table = ({
               disabled={currentPage === 1}
               className={`px-3 py-1 rounded-md ${
                 currentPage === 1
-                  ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                  : 'bg-[#4f46e5] text-white hover:bg-indigo-700'
+                  ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  : "bg-[#4f46e5] text-white hover:bg-indigo-700"
               }`}
             >
               Previous
@@ -284,8 +319,8 @@ const Table = ({
                 onClick={() => handlePageChange(page)}
                 className={`px-3 py-1 rounded-md ${
                   currentPage === page
-                    ? 'bg-[#4f46e5] text-white'
-                    : 'bg-white text-gray-600 hover:bg-gray-100'
+                    ? "bg-[#4f46e5] text-white"
+                    : "bg-white text-gray-600 hover:bg-gray-100"
                 }`}
               >
                 {page}
@@ -296,8 +331,8 @@ const Table = ({
               disabled={currentPage === totalPages}
               className={`px-3 py-1 rounded-md ${
                 currentPage === totalPages
-                  ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                  : 'bg-[#4f46e5] text-white hover:bg-indigo-700'
+                  ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  : "bg-[#4f46e5] text-white hover:bg-indigo-700"
               }`}
             >
               Next

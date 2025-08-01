@@ -76,7 +76,7 @@ const MyLeaves = () => {
         filterTabs={TABS}
         sortable={true}
         title="Leave History"
-        titleClassName="text-blue-800"
+        titleClassName="text-[#4F46E5]"
         viewMoreLink={{ text: "Leave History" }}
         enablePagination={formattedData.length > 5}
       />
